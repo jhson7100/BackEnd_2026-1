@@ -8,44 +8,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/article")
 public class IntroduceController {
 
     private final Map<Long, Article> articles = new HashMap<>();
     private long nextId = 1;
 
-    @GetMapping("/article/{id}")
-    public Article getArticle(@PathVariable Long id) {
-        return findArticle(id);
-    }
-
+    @PostMapping("/article")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
     public Article createArticle(@RequestBody ArticleRequest request) {
         Article article = new Article(nextId++, request.description());
         articles.put(article.id(), article);
-
         return article;
     }
 
-    @PutMapping("/article/{id}")
-    public Article updateArticle(@PathVariable Long id, @RequestBody ArticleRequest request) {
-        findArticle(id);
-
-        Article article = new Article(id, request.description());
-        articles.put(id, article);
-
-        return article;
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("article//{id}")
-    public void deleteArticle(@PathVariable Long id) {
-        findArticle(id);
-        articles.remove(id);
-    }
-
-    private Article findArticle(Long id) {
+    @GetMapping("/article/{id}")
+    public Article getArticle(@PathVariable Long id) {
         Article article = articles.get(id);
 
         if (article == null) {
@@ -53,6 +30,25 @@ public class IntroduceController {
         }
 
         return article;
+    }
+
+    @PutMapping("/article/{id}")
+    public Article updateArticle(@PathVariable Long id, @RequestBody ArticleRequest request) {
+        if (!articles.containsKey(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        Article article = new Article(id, request.description());
+        articles.put(id, article);
+        return article;
+    }
+
+    @DeleteMapping("/article/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteArticle(@PathVariable Long id) {
+        if (articles.remove(id) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     record Article(Long id, String description) {
