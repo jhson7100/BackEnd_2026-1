@@ -14,7 +14,7 @@ public class IntroduceController {
     private final Map<Long, Article> articles = new HashMap<>();
     private long nextId = 1;
 
-    @GetMapping("/{id}")
+    @GetMapping("/article/{id}")
     public Article getArticle(@PathVariable Long id) {
         return findArticle(id);
     }
@@ -28,7 +28,7 @@ public class IntroduceController {
         return article;
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/article/{id}")
     public Article updateArticle(@PathVariable Long id, @RequestBody ArticleRequest request) {
         findArticle(id);
 
@@ -39,7 +39,7 @@ public class IntroduceController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("article//{id}")
     public void deleteArticle(@PathVariable Long id) {
         findArticle(id);
         articles.remove(id);
