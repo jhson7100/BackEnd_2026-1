@@ -1,16 +1,16 @@
 package com.example.demo.model;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 public class Article {
 
     private Long id;
     private String title;
     private String author;
-    private OffsetDateTime date;
+    private LocalDateTime date;
     private String content;
 
-    public Article(Long id, String title, String author, OffsetDateTime date, String content) {
+    public Article(Long id, String title, String author, LocalDateTime date, String content) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -30,7 +30,7 @@ public class Article {
         return author;
     }
 
-    public OffsetDateTime getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
