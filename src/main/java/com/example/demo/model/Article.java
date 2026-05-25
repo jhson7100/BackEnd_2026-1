@@ -1,57 +1,46 @@
 package com.example.demo.model;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 public class Article {
-    private Long id;
-    private Long memberId;
-    private Long boardId;
-    private String title;
-    private String content;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public Article(Long id, Long memberId, Long boardId, String title, String content) {
+    private Long id;
+    private String title;
+    private String author;
+    private OffsetDateTime date;
+    private String content;
+
+    public Article(Long id, String title, String author, OffsetDateTime date, String content) {
         this.id = id;
-        this.memberId = memberId;
-        this.boardId = boardId;
         this.title = title;
+        this.author = author;
+        this.date = date;
         this.content = content;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getMemberId() {
-        return memberId;
-    }
-
-    public Long getBoardId() {
-        return boardId;
-    }
-
     public String getTitle() {
         return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public OffsetDateTime getDate() {
+        return date;
     }
 
     public String getContent() {
         return content;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void update(String title, String content) {
+    public void update(String title, String author, String content) {
         this.title = title;
+        this.author = author;
         this.content = content;
-        this.updatedAt = LocalDateTime.now();
     }
 }
